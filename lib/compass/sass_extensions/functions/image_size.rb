@@ -14,6 +14,13 @@ module Compass::SassExtensions::Functions::ImageSize
   class ImageProperties
     def initialize(file)
       @file = (file.respond_to?(:to_path) ? file.to_path : file)
+      if file.respond_to?(:to_path)
+        @file = file.to_path
+      elsif file.respond_to?(:pathname)
+        @file = file.pathname
+      else
+        file
+      end
       @file_type = File.extname(@file)[1..-1]
     end
 
